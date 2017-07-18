@@ -160,13 +160,17 @@ function* reverseAmount(req, res) {
 
 function* refund(req, res) {
   const { transactionId } = req.body;
-  const trx = Trx.findOne({
+  const trx = yield Trx.findOne({
     _id: transactionId,
   }).lean();
 
   if (!trx) {
     return res.status(400).send('Invalid transaction ID');
   }
+
+  console.log('====================================');
+  console.log(trx);
+  console.log('====================================');
 
   if (!trx.completed || !trx.authorized) {
     return res.status(400).send('Transaction is not complete');

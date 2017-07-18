@@ -12,7 +12,7 @@ const Header = ({ goTo }) =>
   </div>;
 
 Header.propTypes = {
-  goTo: PropTypes.fund,
+  goTo: PropTypes.func,
 };
 
 const mapStateToProps = () => ({});
