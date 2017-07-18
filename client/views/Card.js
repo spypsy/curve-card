@@ -67,6 +67,7 @@ class Card extends Component {
               <input
                 type="number"
                 id="amount"
+                step="0.01"
                 ref={tu => (this.topUpInput = tu)}
               />
               <button type="submit" className="cta">
@@ -79,6 +80,7 @@ class Card extends Component {
             <form onSubmit={this.makeTransaction}>
               <input
                 type="number"
+                step="0.01"
                 id="trx_amount"
                 ref={trx => (this.trxInput = trx)}
               />

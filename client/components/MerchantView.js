@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import { fetchTransactions, editAmount, refund } from '../redux/ducks/merchant';
-import '../styles/MerchantView.less';
+import { fetchTransactions, editAmount, refund } from '../redux/ducks/merchant'
+import '../styles/MerchantView.less'
 
 class MerchantView extends Component {
   static propTypes = {
@@ -14,7 +14,7 @@ class MerchantView extends Component {
     refund: PropTypes.func,
     transactions: PropTypes.array,
     transactionError: PropTypes.string,
-  };
+  }
 
   render() {
     return (
@@ -27,16 +27,20 @@ class MerchantView extends Component {
                 <span className="error">
                   {trx.error}
                 </span>}
-              Amount: <b>{trx.amount} £</b><br />
+              Amount: <b>{trx.amount} £</b>
+              <br />
               Authorized: <b>{trx.authorized.toString()}</b> <br />
               Completed: <b>{trx.completed.toString()}</b> <br />
-              Captured Amount: <b>{trx.capturedAmount} £</b><br />
-              Reversed Amount: <b>{trx.reversedAmount} £</b><br />
+              Captured Amount: <b>{trx.capturedAmount} £</b>
+              <br />
+              Reversed Amount: <b>{trx.reversedAmount} £</b>
+              <br />
               <form onSubmit={e => this.captureAmount(e, trx)}>
                 Capture:
                 <input
                   type="number"
                   id="capture"
+                  step="0.01"
                   ref={c => (this.captureInput = c)}
                 />
                 <button type="submit" className="cta small">
@@ -48,6 +52,7 @@ class MerchantView extends Component {
                 <input
                   type="number"
                   id="reverse"
+                  step="0.01"
                   ref={r => (this.reverseInput = r)}
                 />
                 <button type="submit" className="cta small">
@@ -57,36 +62,36 @@ class MerchantView extends Component {
               <button className="cta" onClick={() => this.refund(trx)}>
                 Refund
               </button>
-            </div>
+            </div>,
           )}
         </div>
       </div>
-    );
+    )
   }
 
   captureAmount = (e, { _id }) => {
-    e.preventDefault();
-    this.props.editAmount(e.target.capture.value, _id, 'capture');
-    this.captureInput.value = null;
-  };
+    e.preventDefault()
+    this.props.editAmount(e.target.capture.value, _id, 'capture')
+    this.captureInput.value = null
+  }
 
   reverseAmount = (e, { _id }) => {
-    e.preventDefault();
-    this.props.editAmount(e.target.reverse.value, _id, 'reverse');
-    this.captureInput.value = null;
-  };
+    e.preventDefault()
+    this.props.editAmount(e.target.reverse.value, _id, 'reverse')
+    this.captureInput.value = null
+  }
 
   refund = ({ _id }) => {
-    this.props.refund(_id);
-  };
+    this.props.refund(_id)
+  }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   transactions: state.merchant.transactions.filter(
-    trx => trx.card === ownProps.cardId
+    trx => trx.card === ownProps.cardId,
   ),
   transactionError: state.merchant.error,
-});
+})
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -95,7 +100,7 @@ const mapDispatchToProps = dispatch =>
       editAmount,
       refund,
     },
-    dispatch
-  );
+    dispatch,
+  )
 
-export default connect(mapStateToProps, mapDispatchToProps)(MerchantView);
+export default connect(mapStateToProps, mapDispatchToProps)(MerchantView)
