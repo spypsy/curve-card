@@ -1,1 +1,1 @@
-web: yarn start
+web: ENV="production" yarn start
