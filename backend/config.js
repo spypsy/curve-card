@@ -3,7 +3,7 @@ export const getConfig = () => {
   const config = {
     development: {
       db: {
-        MONGO_URI: ENV.MONGODB_URI || 'mongodb://localhost:27017/goquoteme',
+        MONGO_URI: ENV.MONGODB_URI || 'mongodb://localhost:27017/curve',
       },
       token: {
         secret: ENV.TOKEN_SECRET || '',

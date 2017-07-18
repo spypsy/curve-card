@@ -27,7 +27,6 @@ rules:
   import/no-duplicates: 2
   react/jsx-key: 2
   react/prefer-es6-class: 0
-  react/jsx-closing-bracket-location: [2, "after-props"]
   react/no-multi-comp: 1
   react/jsx-no-bind: 1
   react/prefer-stateless-function: 1

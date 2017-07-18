@@ -1,0 +1,31 @@
+@import './constants.less';
+
+.merchant-view {
+  padding: 18px;
+
+  .transactions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .transaction {
+    box-shadow: @shadow;
+    width: 30%;
+    min-width: 240px;
+    margin: 18px;
+    padding: 8px;
+
+    .error {
+      display: inline-block;
+      color: red;
+    }
+
+    input {
+      width: 80px;
+      margin: 12px 8px;
+    }
+    .cta {
+      margin-top: 8px;
+    }
+  }
+}

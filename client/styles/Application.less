@@ -1,5 +1,6 @@
 @import './normalize.css';
 @import './constants.less';
+@import './vendor/loader.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 
@@ -9,13 +10,27 @@ body, html {
 
 .application {
   color: @dark-color;
-  .header {
-    text-align: center;
-    color: @main-color;
-    height: 80px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 3px;
 
+  .cards-list {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    .card-item {
+      margin: 10px;
+      box-shadow: @shadow;
+      padding: 10px;
+      width: 40%;
+      min-width: 280px;
+
+      a {
+        color: @main-color;
+      }
+
+      .description {
+        color: lightgrey;
+      }
+    }
   }
 
   .cards-wrapper {
@@ -24,16 +39,23 @@ body, html {
 
   .cta {
     padding: 6px 10px;
-    background: #02c2ed;
+    background: @main-color;
     width: auto;
     left: 12px;
     border-radius: 20px;
     color: white;
     cursor: pointer;
     width: 130px;
+    border: none;
+    text-align: center;
+
+    &.small {
+      width: 80px;
+      display: inline-block;
+    }
   }
 
   .create {
-    margin-left: 12px;
+    margin: 0 auto;
   }
 }

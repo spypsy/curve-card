@@ -43,7 +43,7 @@ class CardCreator extends Component {
           </label>
           <label htmlFor="amount">
             Initial amount <br />
-            <input type="number" className="user-input" />
+            <input id="amount" type="number" className="user-input" />
           </label>
           <button className="cta" type="submit">
             Submit
@@ -56,12 +56,17 @@ class CardCreator extends Component {
 
   handleCreateCard = e => {
     e.preventDefault()
-    if (!e.target.name || !e.target.name.length) {
+    if (!e.target.name.value || !e.target.name.value.length) {
       this.setState({
         warning: 'Please add a name',
       })
       return
     }
+    this.props.addCard({
+      name: e.target.name.value,
+      description: e.target.description.value || '',
+      amount: e.target.amount.value || 0,
+    });
   }
 }
 

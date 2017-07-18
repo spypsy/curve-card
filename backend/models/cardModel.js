@@ -6,7 +6,6 @@ const Card = new mongoose.Schema({
   balance: {type: Number, default: 0},
   blockedBalance: {type: Number, default: 0},
   transactions: [{type: mongoose.Schema.ObjectId, ref: 'Transaction'}],
-  locked: {type: Boolean},
 }, {
   strict: true,
 });

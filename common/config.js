@@ -10,8 +10,6 @@ const config = {};
 // host    = where the server is served
 // apphost = where client is served
 // api     = where the api is served
-// minify  = where to minify everything and create single bundle (or keep two separate, non-minified bundles)
-// www     = cordova web folder
 
 switch (ENV) {
 
@@ -20,7 +18,6 @@ switch (ENV) {
     config.env = 'test';
     config.host = 'http://' + LOCALHOST + ':3001/';
     config.apphost = 'http://' + LOCALHOST + ':8080/';
-    config.minify = false;
     break;
 
   case 'd':
@@ -28,7 +25,6 @@ switch (ENV) {
   case 'development':
     config.env = 'development';
     config.host = 'http://' + LOCALHOST + ':3000/';
-    config.minify = false;
     break;
 
   case 'p':
@@ -36,7 +32,6 @@ switch (ENV) {
   case 'production':
     config.env = 'production';
     config.host = '';//'https://.herokuapp.com/';
-    config.minify = true;
     config.dbUri = env.MONGODB_URI;
     break;
 
