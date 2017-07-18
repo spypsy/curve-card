@@ -31,7 +31,7 @@ switch (ENV) {
   case 'prod':
   case 'production':
     config.env = 'production';
-    config.host = '';//'https://.herokuapp.com/';
+    config.host = 'https://curve-cards.herokuapp.com/';//'https://.herokuapp.com/';
     config.dbUri = env.MONGODB_URI;
     break;
 
