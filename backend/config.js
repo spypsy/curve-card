@@ -18,10 +18,8 @@ export const getConfig = () => {
       },
     },
   };
-  if (!config[ENV.ENV]) {
-    throw new Error('Incorrect env ' + ENV.ENV);
-  }
-  return config[ENV.ENV];
+  const env = ENV.ENV || 'development';
+  return config[env]
 };
 
 export const getConnectOptions = () => {
