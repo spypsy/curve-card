@@ -1,5 +1,5 @@
 export const APP = {
   store: {
-    name: 'goquoteme',
+    name: 'curve_card',
   },
 };

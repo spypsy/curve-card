@@ -8,6 +8,7 @@ import cors from 'cors';
 
 import errorDev from './middleware/errorDev';
 import {getConfig} from './config';
+import cardsApi from './api/cards';
 
 const app = express();
 const config = getConfig();
@@ -31,6 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
+
+// API endpoints
+app.use('/cards', cardsApi);
 
 // development error handler
 // will print stacktrace
