@@ -5,7 +5,6 @@ const path = require('path');
 module.exports = {
   entry: {
     bundle: './app.js',
-    styles: './styles/main.less',
   },
   output: {
     path: path.join(__dirname, '../backend/public'),
