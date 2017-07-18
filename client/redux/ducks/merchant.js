@@ -1,17 +1,17 @@
-import Duck from 'reduck'
+import Duck from 'reduck';
 
 import {
   REQUEST_AUTH,
   FETCH_TRANSACTIONS,
   EDIT_AMOUNT,
   REFUND,
-} from '../actions'
+} from '../actions';
 
 const initialState = {
   transactions: [],
-}
+};
 
-const duck = new Duck('merchant', initialState)
+const duck = new Duck('merchant', initialState);
 
 export const requestAuth = duck.defineAction(REQUEST_AUTH, {
   creator(amount, cardId) {
@@ -26,21 +26,21 @@ export const requestAuth = duck.defineAction(REQUEST_AUTH, {
           url: 'pay/request-auth',
         },
       },
-    }
+    };
   },
   resolve(state, { payload }) {
     return {
       ...state,
       transactions: state.transactions.concat(payload.data.transaction),
-    }
+    };
   },
   reject(state, { payload }) {
     return {
       ...state,
       error: payload.response.data,
-    }
+    };
   },
-})
+});
 
 export const refund = duck.defineAction(REFUND, {
   creator(trxId) {
@@ -55,7 +55,7 @@ export const refund = duck.defineAction(REFUND, {
           url: 'pay/refund',
         },
       },
-    }
+    };
   },
   resolve(state, { meta }) {
     return {
@@ -65,12 +65,12 @@ export const refund = duck.defineAction(REFUND, {
           return {
             ...trx,
             refunded: true,
-            error: null
-          }
+            error: null,
+          };
         }
-        return trx
+        return trx;
       }),
-    }
+    };
   },
   reject(state, { payload, meta }) {
     return {
@@ -80,13 +80,13 @@ export const refund = duck.defineAction(REFUND, {
           return {
             ...trx,
             error: payload.response.data.message || payload.response.data,
-          }
+          };
         }
-        return trx
+        return trx;
       }),
-    }
+    };
   },
-})
+});
 
 // to be used for both capturing and reversing an amount
 export const editAmount = duck.defineAction(EDIT_AMOUNT, {
@@ -100,7 +100,7 @@ export const editAmount = duck.defineAction(EDIT_AMOUNT, {
           data: { amount, transactionId: trxId },
         },
       },
-    }
+    };
   },
   resolve(state, { payload, meta }) {
     return {
@@ -109,11 +109,11 @@ export const editAmount = duck.defineAction(EDIT_AMOUNT, {
         if (trx._id === meta.payload.trxId) {
           return {
             ...payload.data.newTransaction,
-          }
+          };
         }
-        return trx
+        return trx;
       }),
-    }
+    };
   },
   reject(state, { payload, meta }) {
     return {
@@ -123,13 +123,13 @@ export const editAmount = duck.defineAction(EDIT_AMOUNT, {
           return {
             ...trx,
             error: payload.response.data.message || payload.response.data,
-          }
+          };
         }
-        return trx
+        return trx;
       }),
-    }
+    };
   },
-})
+});
 
 export const fetchTransactions = duck.defineAction(FETCH_TRANSACTIONS, {
   creator(cardId) {
@@ -141,27 +141,27 @@ export const fetchTransactions = duck.defineAction(FETCH_TRANSACTIONS, {
           url: `merchant/transactions/${cardId}`,
         },
       },
-    }
+    };
   },
   reducer(state) {
     return {
       ...state,
       ready: false,
-    }
+    };
   },
   resolve(state, { payload }) {
     return {
       ...state,
       ready: true,
       transactions: payload.data.transactions,
-    }
+    };
   },
   reject(state) {
     return {
       ...state,
       ready: true,
-    }
+    };
   },
-})
+});
 
-export default duck.reducer
+export default duck.reducer;

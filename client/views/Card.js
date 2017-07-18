@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Loader } from 'react-loaders'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Loader } from 'react-loaders';
 
-import MerchantView from '../components/MerchantView'
-import { topUpCard, fetchCard } from '../redux/ducks/cards'
-import { requestAuth, fetchTransactions } from '../redux/ducks/merchant'
-import '../styles/Card.less'
+import MerchantView from '../components/MerchantView';
+import { topUpCard, fetchCard } from '../redux/ducks/cards';
+import { requestAuth, fetchTransactions } from '../redux/ducks/merchant';
+import '../styles/Card.less';
 
 class Card extends Component {
   static propTypes = {
@@ -18,27 +18,26 @@ class Card extends Component {
     fetchTransactions: PropTypes.func,
     params: PropTypes.object,
     transactions: PropTypes.array,
-  }
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       error: null,
-    }
+    };
   }
 
   componentWillMount() {
-    const {cardId} = this.props.params
-    this.props.fetchCard(cardId)
+    const { cardId } = this.props.params;
+    this.props.fetchCard(cardId);
     this.props.fetchTransactions(cardId);
-
   }
 
   render() {
-    const { card } = this.props
-    const { error } = card
+    const { card } = this.props;
+    const { error } = card;
     if (!card || !card.ready) {
-      return <Loader />
+      return <Loader />;
     }
     return (
       <div>
@@ -78,8 +77,11 @@ class Card extends Component {
           <div className="card-input">
             Make Transaction:
             <form onSubmit={this.makeTransaction}>
-              <input type="number" id="trx_amount"
-                ref={trx => this.trxInput = trx}/>
+              <input
+                type="number"
+                id="trx_amount"
+                ref={trx => (this.trxInput = trx)}
+              />
               <button type="submit" className="cta">
                 Submit
               </button>
@@ -87,32 +89,33 @@ class Card extends Component {
           </div>
           <div
             className="cta refresh"
-            onClick={() => this.props.fetchCard(card._id)}>
+            onClick={() => this.props.fetchCard(card._id)}
+          >
             Refresh Card
           </div>
         </div>
         <MerchantView cardId={card._id} />
       </div>
-    )
+    );
   }
 
   topUpBalance = e => {
-    e.preventDefault()
-    this.props.topUpCard(e.target.amount.value || 0, this.props.card._id)
-    this.topUpInput.value = null
-  }
+    e.preventDefault();
+    this.props.topUpCard(e.target.amount.value || 0, this.props.card._id);
+    this.topUpInput.value = null;
+  };
 
   makeTransaction = e => {
-    e.preventDefault()
-    this.props.requestAuth(e.target.trx_amount.value || 0, this.props.card._id)
-    this.trxInput.value = null
-  }
+    e.preventDefault();
+    this.props.requestAuth(e.target.trx_amount.value || 0, this.props.card._id);
+    this.trxInput.value = null;
+  };
 }
 
 function mapStateToProps(state, ownProps) {
   return {
     card: state.cards.items.find(c => c._id === ownProps.params.cardId),
-  }
+  };
 }
 
 const mapDispatchToProps = dispatch =>
@@ -123,7 +126,7 @@ const mapDispatchToProps = dispatch =>
       requestAuth,
       fetchTransactions,
     },
-    dispatch,
-  )
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card)
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

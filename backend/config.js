@@ -18,7 +18,9 @@ export const getConfig = () => {
       },
     },
   };
-  if (!config[ENV.ENV]) { throw new Error('Incorrect env ' + ENV.ENV); }
+  if (!config[ENV.ENV]) {
+    throw new Error('Incorrect env ' + ENV.ENV);
+  }
   return config[ENV.ENV];
 };
 

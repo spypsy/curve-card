@@ -1,23 +1,23 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { addCard, cancelCreatingCard } from '../redux/ducks/cards'
+import { addCard, cancelCreatingCard } from '../redux/ducks/cards';
 
-import '../styles/CardCreator.less'
+import '../styles/CardCreator.less';
 
 class CardCreator extends Component {
   static propTypes = {
     addCard: PropTypes.func,
     cancelCreatingCard: PropTypes.func,
-  }
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       warning: null,
-    }
+    };
   }
 
   render() {
@@ -51,26 +51,26 @@ class CardCreator extends Component {
         </form>
         <div className="overlay" />
       </div>
-    )
+    );
   }
 
   handleCreateCard = e => {
-    e.preventDefault()
+    e.preventDefault();
     if (!e.target.name.value || !e.target.name.value.length) {
       this.setState({
         warning: 'Please add a name',
-      })
-      return
+      });
+      return;
     }
     this.props.addCard({
       name: e.target.name.value,
       description: e.target.description.value || '',
       amount: e.target.amount.value || 0,
     });
-  }
+  };
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch =>
       addCard,
       cancelCreatingCard,
     },
-    dispatch,
-  )
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardCreator)
+export default connect(mapStateToProps, mapDispatchToProps)(CardCreator);

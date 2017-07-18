@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router} from 'react-router';
-import {Provider} from 'react-redux';
-import {syncHistoryWithStore} from 'react-router-redux';
+import { Router } from 'react-router';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from './routes';
-import store, {loadFromStorage, history} from './redux/store';
+import store, { loadFromStorage, history } from './redux/store';
 
 const hist = syncHistoryWithStore(history, store);
 const node = document.getElementById('app');
 
 function loadReact() {
-  ReactDOM.unmountComponentAtNode(node);// clean waiting screen
+  ReactDOM.unmountComponentAtNode(node); // clean waiting screen
 
   ReactDOM.render(
     <Provider store={store}>
@@ -19,7 +19,7 @@ function loadReact() {
         {routes}
       </Router>
     </Provider>,
-    node,
+    node
   );
 }
 
@@ -27,7 +27,7 @@ loadFromStorage(store)
   .then(() => {
     loadReact();
   })
-  .catch((err) => {
+  .catch(err => {
     console.error(err || new Error('Failed to load previous state'));
     loadReact(); // load React anyway
   });

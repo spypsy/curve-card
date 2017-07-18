@@ -1,4 +1,4 @@
-import Duck from 'reduck'
+import Duck from 'reduck';
 
 import {
   ADD_CARD,
@@ -7,16 +7,16 @@ import {
   FETCH_CARDS,
   START_CREATE_CARD,
   CANCEL_CREATE_CARD,
-} from '../actions'
+} from '../actions';
 
 const initialState = {
   items: [],
   ready: true,
   creationInProgress: false,
   error: null,
-}
+};
 
-const cardsDuck = new Duck('cards', initialState)
+const cardsDuck = new Duck('cards', initialState);
 
 export const addCard = cardsDuck.defineAction(ADD_CARD, {
   creator(cardData) {
@@ -31,23 +31,23 @@ export const addCard = cardsDuck.defineAction(ADD_CARD, {
           data: { ...cardData },
         },
       },
-    }
+    };
   },
   reducer(state) {
     return {
       ...state,
       ready: false,
       creationInProgress: false,
-    }
+    };
   },
   // card was succesfully created
   resolve(state, { payload }) {
-    const { newCard } = payload.data
+    const { newCard } = payload.data;
     return {
       ...state,
       ready: true,
       items: state.items.concat([newCard]),
-    }
+    };
   },
   // error on creating card
   // TODO: maybe display feedback
@@ -55,9 +55,9 @@ export const addCard = cardsDuck.defineAction(ADD_CARD, {
     return {
       ...state,
       ready: false,
-    }
+    };
   },
-})
+});
 
 export const topUpCard = cardsDuck.defineAction(TOP_UP_CARD, {
   creator(amount, cardId) {
@@ -70,7 +70,7 @@ export const topUpCard = cardsDuck.defineAction(TOP_UP_CARD, {
           data: { amount, cardId },
         },
       },
-    }
+    };
   },
   reducer(state, payload) {
     return {
@@ -80,11 +80,11 @@ export const topUpCard = cardsDuck.defineAction(TOP_UP_CARD, {
           return {
             ...card,
             ready: false,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
+    };
   },
   resolve(state, { payload, meta }) {
     return {
@@ -96,13 +96,13 @@ export const topUpCard = cardsDuck.defineAction(TOP_UP_CARD, {
             error: null,
             ready: true,
             balance: payload.data.newBalance,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
+    };
   },
-  reject(state, {payload, meta}) {
+  reject(state, { payload, meta }) {
     return {
       ...state,
       items: state.items.map(card => {
@@ -111,13 +111,13 @@ export const topUpCard = cardsDuck.defineAction(TOP_UP_CARD, {
             ...card,
             error: payload.response.data,
             ready: true,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
-  }
-})
+    };
+  },
+});
 
 export const fetchCards = cardsDuck.defineAction(FETCH_CARDS, {
   creator() {
@@ -126,31 +126,31 @@ export const fetchCards = cardsDuck.defineAction(FETCH_CARDS, {
       meta: {
         promise: {
           method: 'GET',
-          url: 'cards'
-        }
-      }
-    }
+          url: 'cards',
+        },
+      },
+    };
   },
   reducer(state) {
     return {
       ...state,
       ready: false,
-    }
+    };
   },
-  resolve(state, {payload}) {
+  resolve(state, { payload }) {
     return {
       ...state,
       ready: true,
       items: payload.data.cards,
-    }
+    };
   },
   reject(state) {
     return {
       ...state,
-      ready: true
-    }
-  }
-})
+      ready: true,
+    };
+  },
+});
 
 export const fetchCard = cardsDuck.defineAction(FETCH_CARD, {
   creator(cardId) {
@@ -159,10 +159,10 @@ export const fetchCard = cardsDuck.defineAction(FETCH_CARD, {
       meta: {
         promise: {
           method: 'GET',
-          url: `cards/${cardId}`
-        }
-      }
-    }
+          url: `cards/${cardId}`,
+        },
+      },
+    };
   },
   reducer(state, { payload }) {
     return {
@@ -172,11 +172,11 @@ export const fetchCard = cardsDuck.defineAction(FETCH_CARD, {
           return {
             ...card,
             ready: false,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
+    };
   },
   resolve(state, { payload, meta }) {
     return {
@@ -187,11 +187,11 @@ export const fetchCard = cardsDuck.defineAction(FETCH_CARD, {
             ...payload.data.card,
             error: null,
             ready: true,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
+    };
   },
   reject(state, { meta }) {
     return {
@@ -202,34 +202,34 @@ export const fetchCard = cardsDuck.defineAction(FETCH_CARD, {
             ...card,
             error: 'Unable to update card info',
             ready: true,
-          }
+          };
         }
-        return card
+        return card;
       }),
-    }
+    };
   },
-})
+});
 
 export const startCreatingCard = cardsDuck.defineAction(START_CREATE_CARD, {
   creator() {
     return {
       payload: {},
-    }
+    };
   },
   reducer(state) {
-    return { ...state, creationInProgress: true }
+    return { ...state, creationInProgress: true };
   },
-})
+});
 
 export const cancelCreatingCard = cardsDuck.defineAction(CANCEL_CREATE_CARD, {
   creator() {
     return {
       payload: {},
-    }
+    };
   },
   reducer(state) {
-    return { ...state, creationInProgress: false }
+    return { ...state, creationInProgress: false };
   },
-})
+});
 
-export default cardsDuck.reducer
+export default cardsDuck.reducer;
